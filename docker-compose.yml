@@ -1,0 +1,13 @@
+services:
+  quorum:
+    build: .
+    ports:
+      - "8010:8010"
+    environment:
+      GITHUB_TOKEN: ${GITHUB_TOKEN:-}
+    volumes:
+      - quorum-data:/data
+
+volumes:
+  quorum-data:
+

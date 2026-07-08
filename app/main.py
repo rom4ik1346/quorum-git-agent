@@ -4,9 +4,11 @@ from contextlib import asynccontextmanager
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 
 from app.analyzer import analyze_repository_bundle
-from app.config import database_path, github_token
+from app.config import PROJECT_ROOT, database_path, github_token
 from app.database import Database
 from app.demo_data import DEMO_BUNDLE
 from app.github_client import GitHubClient, GitHubClientError
@@ -31,6 +33,12 @@ def create_app(database_file: Path | None = None) -> FastAPI:
     )
     application.state.database = database
     application.state.github_client_factory = GitHubClient
+    static_directory = PROJECT_ROOT / "app" / "static"
+    application.mount("/static", StaticFiles(directory=static_directory), name="static")
+
+    @application.get("/", include_in_schema=False)
+    async def dashboard() -> FileResponse:
+        return FileResponse(static_directory / "index.html")
 
     @application.get("/api/health", tags=["system"])
     async def health() -> dict[str, str]:

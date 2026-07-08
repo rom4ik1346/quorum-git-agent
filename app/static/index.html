@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Quorum Git Agent — repository intelligence through REST and MCP."
+    />
+    <title>Quorum — Git intelligence</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="/" aria-label="Quorum dashboard">
+          <span class="brand-mark">Q</span>
+          <span>
+            <strong>Quorum</strong>
+            <small>Git intelligence</small>
+          </span>
+        </a>
+
+        <nav class="nav-list" aria-label="Main navigation">
+          <a class="nav-item active" href="#overview">
+            <span>01</span>
+            Overview
+          </a>
+          <a class="nav-item" href="#risks">
+            <span>02</span>
+            Risk signals
+          </a>
+          <a class="nav-item" href="#triage">
+            <span>03</span>
+            Issue triage
+          </a>
+        </nav>
+
+        <div class="sidebar-card">
+          <span class="pulse"></span>
+          <p>MCP server ready</p>
+          <small>4 tools · stdio transport</small>
+        </div>
+        <a class="docs-link" href="/docs">Open API docs ↗</a>
+      </aside>
+
+      <main>
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">ENGINEERING HEALTH / LIVE</p>
+            <h1>Repository signal, without the noise.</h1>
+          </div>
+          <div class="topbar-status">
+            <span class="status-dot"></span>
+            GitHub API connected
+          </div>
+        </header>
+
+        <section class="command-panel" aria-labelledby="analysis-title">
+          <div>
+            <p class="section-kicker">NEW ANALYSIS</p>
+            <h2 id="analysis-title">Inspect a public repository</h2>
+            <p>Quorum turns activity, CI, backlog and project metadata into a focused action plan.</p>
+          </div>
+          <form id="analysis-form">
+            <label for="repository">Repository</label>
+            <div class="input-row">
+              <input
+                id="repository"
+                name="repository"
+                placeholder="owner/repository"
+                autocomplete="off"
+                required
+              />
+              <button id="analyze-button" type="submit">Run analysis</button>
+            </div>
+            <button class="text-button" id="demo-button" type="button">Use demo dataset</button>
+          </form>
+        </section>
+
+        <div id="message" class="message" role="status" aria-live="polite"></div>
+
+        <section id="overview" class="metric-grid" aria-label="Overview">
+          <article class="metric-card feature">
+            <div>
+              <p>Repository health</p>
+              <strong id="health-score">—</strong>
+              <span>/ 100</span>
+            </div>
+            <div class="score-ring" id="score-ring">
+              <span id="score-ring-value">—</span>
+            </div>
+          </article>
+          <article class="metric-card">
+            <p>Analyses stored</p>
+            <strong id="analysis-count">—</strong>
+            <span>SQLite history</span>
+          </article>
+          <article class="metric-card">
+            <p>CI success</p>
+            <strong id="ci-success">—</strong>
+            <span>recent workflow runs</span>
+          </article>
+          <article class="metric-card">
+            <p>Open actions</p>
+            <strong id="open-actions">—</strong>
+            <span>follow-up queue</span>
+          </article>
+        </section>
+
+        <section class="report-grid">
+          <article class="panel report-summary">
+            <div class="panel-heading">
+              <div>
+                <p class="section-kicker">CURRENT REPORT</p>
+                <h2 id="repository-name">Loading report…</h2>
+              </div>
+              <a id="repository-link" href="#" target="_blank" rel="noreferrer">GitHub ↗</a>
+            </div>
+            <p class="verdict" id="verdict"></p>
+            <p class="summary" id="summary"></p>
+            <div class="mini-metrics" id="mini-metrics"></div>
+            <div class="language-block">
+              <div class="subheading">
+                <h3>Language mix</h3>
+                <span>top 5</span>
+              </div>
+              <div id="language-list" class="language-list"></div>
+            </div>
+          </article>
+
+          <aside class="panel history-panel">
+            <div class="panel-heading">
+              <div>
+                <p class="section-kicker">DATABASE</p>
+                <h2>Recent analyses</h2>
+              </div>
+            </div>
+            <div id="history-list" class="history-list"></div>
+          </aside>
+        </section>
+
+        <section id="risks" class="split-section">
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <p class="section-kicker">RISK RADAR</p>
+                <h2>Signals to investigate</h2>
+              </div>
+            </div>
+            <div id="risk-list" class="stack-list"></div>
+          </article>
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <p class="section-kicker">NEXT MOVES</p>
+                <h2>Recommended actions</h2>
+              </div>
+            </div>
+            <div id="action-list" class="stack-list"></div>
+          </article>
+        </section>
+
+        <section id="triage" class="panel triage-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="section-kicker">AUTOMATED TRIAGE</p>
+              <h2>Issue priority queue</h2>
+            </div>
+            <span>score = labels + age + discussion</span>
+          </div>
+          <div id="triage-list" class="triage-list"></div>
+        </section>
+
+        <footer>
+          <span>Quorum Git Agent</span>
+          <span>FastAPI · SQLite · GitHub REST · MCP</span>
+        </footer>
+      </main>
+    </div>
+
+    <script src="/static/app.js" defer></script>
+  </body>
+</html>
+
